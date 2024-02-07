@@ -90,27 +90,24 @@ function App() {
     setBoard(updatedBoard);
   };
 
-  // Función para destapar una celda y actualizar el estado
-  const openCell = (row, col) => {
-    const updatedBoard = [...board];
-    updatedBoard[row][col].EstaDestapado = true;
+// Función para destapar una celda y actualizar el estado
+const openCell = (row, col) => {
+  const updatedBoard = [...board];
+  updatedBoard[row][col].EstaDestapado = true;
+  if (updatedBoard[row][col].TieneMina) {
+    const updatedBoardWithMines = updatedBoard.map(row =>
+      row.map(cell => ({
+        ...cell,
+        EstaDestapado: true
+      }))
+    );
+    setBoard(updatedBoardWithMines);
+  } else {
+      openEmptyCells(row, col); // Llamar a la función openEmptyCells aquí
+      setBoard(updatedBoard); // Actualizar el estado del tablero con el tablero actualizado
+  }
+};
 
-    if (updatedBoard[row][col].TieneMina) {
-      const updatedBoardWithMines = updatedBoard.map(row =>
-        row.map(cell => ({
-          ...cell,
-          EstaDestapado: true
-        }))
-      );
-      setBoard(updatedBoardWithMines);
-    } else {
-      if (updatedBoard[row][col].MinasAlrededor === 0) {
-        openEmptyCells(row, col); // Llamar a la función openEmptyCells aquí
-      } else {
-        setBoard(updatedBoard);
-      }
-    }
-  };
 
   // Función para renderizar el tablero
   const renderBoard = () => {
