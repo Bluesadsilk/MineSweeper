@@ -1,0 +1,16 @@
+import React from 'react';
+
+const Cell = ({ TieneMina, EstaDestapado, MinasAlrededor, x, y, updateBoard }) => {
+  
+  const handleOnclick = () => {
+    updateBoard(y, x);
+  }
+
+  return (
+    <button onClick={handleOnclick} className='cell'>
+      {EstaDestapado ? (TieneMina ? '💣' : MinasAlrededor) : null}
+    </button>
+  );
+};
+
+export default Cell;
