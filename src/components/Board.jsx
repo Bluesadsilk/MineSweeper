@@ -134,7 +134,6 @@ const openCell = (row, col) => {
 
   return (
     <>
-      <h1>MineSweeper</h1>
       <button onClick={resetGame}>Reset game</button>
       <div className="board">{renderBoard()}</div>
       <footer>
