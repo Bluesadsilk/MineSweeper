@@ -112,6 +112,7 @@ font-size: 50px;
   background-color: #242424;
   display: grid;
   border: solid white;
+  border-radius: 25px;
   margin: 20vw;
   padding: 2vw;
   margin-top: 0vh;
@@ -122,19 +123,23 @@ font-size: 50px;
 .lost {
   background-color: #242424;
   background-image: url("/src/assets/sonrisa.png");
-  border: 1px solid white;
+  border: 2px solid white;
+  border-radius: 25px;
   width: 5vw; /* Cambiado de max-width a width */
   height: 5vw; /* Cambiado de max-height a height */
   margin: auto;
-  background-size: cover;
+  background-size: 4vw;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .lost{
   background-image: url("/src/assets/cansado.png");
 }
 
+
 /* Agrega la regla hover para cambiar la imagen */
 .won:hover,
 .lost:hover {
-  background-image: url("/src/assets/otra-imagen.png"); /* Cambia la imagen al pasar el mouse */
+  background-image: url("/src/assets/yelmo.png"); /* Cambia la imagen al pasar el mouse */
 }

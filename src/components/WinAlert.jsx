@@ -11,7 +11,7 @@ const WinAlert = ({ resetGame, winner }) => {
     <div className='modalWin'>
       <h1>{winner ? 'Congratulations' : 'Game Over'}</h1>
       <h2>{winner ? 'You have won the game' : 'You have lost the game'}</h2>
-      <button className={winner ? 'won' : 'lost'} onClick={handleClick}></button>
+     <div className='imageContainer'><button className={winner ? 'won' : 'lost'} onClick={handleClick}></button></div>
     </div>
   </>
   

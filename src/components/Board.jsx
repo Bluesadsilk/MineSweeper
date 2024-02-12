@@ -74,10 +74,9 @@ function Board({ yLength, xLength, mines }) {
     const cols = updatedBoard[0].length;
   
     const openCellRecursive = (r, c) => {
-      if (r < 0 || r >= rows || c < 0 || c >= cols || updatedBoard[r][c].EstaDestapado) {
+      if (r < 0 || r > rows || c < 0 || c >= cols || updatedBoard[r][c].EstaDestapado) {
         return;
       }
-  
       updatedBoard[r][c].EstaDestapado = true;
   
       // Verificar las 8 casillas adyacentes
