@@ -72,7 +72,6 @@ function Board({ yLength, xLength, mines }) {
     const updatedBoard = [...board];
     const rows = updatedBoard.length;
     const cols = updatedBoard[0].length;
-  
     const openCellRecursive = (r, c) => {
       if (r < 0 || r > rows || c < 0 || c >= cols || updatedBoard[r][c].EstaDestapado) {
         return;
@@ -103,7 +102,7 @@ function Board({ yLength, xLength, mines }) {
   // Función para destapar una celda y actualizar el estado
   const openCell = (row, col) => {
     const updatedBoard = [...board];
-    updatedBoard[row][col].EstaDestapado = true;
+    updatedBoard[row][col].EstaDestapado = false;
 
     if (updatedBoard[row][col].TieneMina) {
       const updatedBoardWithMines = updatedBoard.map(row =>
