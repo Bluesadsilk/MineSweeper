@@ -54,6 +54,7 @@ button {
   font-size: 16px;
   cursor: pointer;
   justify-content: center;
+  border: 1px solid white;
 }
 
 footer {
@@ -106,3 +107,34 @@ font-size: 50px;
   display: none;
 }
 
+
+.modalWin {
+  background-color: #242424;
+  display: grid;
+  border: solid white;
+  margin: 20vw;
+  padding: 2vw;
+  margin-top: 0vh;
+}
+
+/* Define las clases para los botones */
+.won,
+.lost {
+  background-color: #242424;
+  background-image: url("/src/assets/sonrisa.png");
+  border: 1px solid white;
+  width: 5vw; /* Cambiado de max-width a width */
+  height: 5vw; /* Cambiado de max-height a height */
+  margin: auto;
+  background-size: cover;
+}
+
+.lost{
+  background-image: url("/src/assets/cansado.png");
+}
+
+/* Agrega la regla hover para cambiar la imagen */
+.won:hover,
+.lost:hover {
+  background-image: url("/src/assets/otra-imagen.png"); /* Cambia la imagen al pasar el mouse */
+}

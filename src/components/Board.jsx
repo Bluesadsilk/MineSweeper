@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Cell from './Cell';
+import WinAlert from './WinAlert';
 
-function Board({yLength,xLength, mines}) {
+function Board({ yLength, xLength, mines }) {
   // Función para generar un nuevo tablero
   const createNewBoard = () => {
     const newBoard = Array.from({ length: yLength }, () =>
@@ -15,6 +16,16 @@ function Board({yLength,xLength, mines}) {
     calculateAdjacentMines(newBoard);
     return newBoard;
   };
+
+  const [gameOver, setGameOver] = useState(false);
+  const [gameWon, setGameWon] = useState(false);
+
+  // Función para reiniciar el juego
+  function resetGame() {
+    setBoard(createNewBoard());
+    setGameOver(false);
+    setGameWon(false);
+  }
 
   // Función para generar minas aleatorias en el tablero
   const generateMines = (board) => {
@@ -57,22 +68,18 @@ function Board({yLength,xLength, mines}) {
     }
   };
 
-  // Estado para el tablero
-  const [board, setBoard] = useState(createNewBoard());
-
-  // Función para destapar celdas adyacentes con 0 minas alrededor
-  const openEmptyCells = (row, col) => {
+  const openEmptyCells = (row, col, board) => {
     const updatedBoard = [...board];
     const rows = updatedBoard.length;
     const cols = updatedBoard[0].length;
-
+  
     const openCellRecursive = (r, c) => {
       if (r < 0 || r >= rows || c < 0 || c >= cols || updatedBoard[r][c].EstaDestapado) {
         return;
       }
-
+  
       updatedBoard[r][c].EstaDestapado = true;
-
+  
       // Verificar las 8 casillas adyacentes
       for (let di = -1; di <= 1; di++) {
         for (let dj = -1; dj <= 1; dj++) {
@@ -84,28 +91,51 @@ function Board({yLength,xLength, mines}) {
         }
       }
     };
-
+  
     openCellRecursive(row, col);
-    setBoard(updatedBoard);
+    return updatedBoard;
+  };
+  
+  
+
+  // Estado para el tablero
+  const [board, setBoard] = useState(createNewBoard());
+
+  // Función para destapar una celda y actualizar el estado
+  const openCell = (row, col) => {
+    const updatedBoard = [...board];
+    updatedBoard[row][col].EstaDestapado = true;
+
+    if (updatedBoard[row][col].TieneMina) {
+      const updatedBoardWithMines = updatedBoard.map(row =>
+        row.map(cell => ({
+          ...cell,
+          EstaDestapado: true
+        }))
+      );
+      setBoard(updatedBoardWithMines);
+      setGameOver(true);
+    } else {
+      const updatedBoardAfterOpen = openEmptyCells(row, col, updatedBoard);
+      setBoard(updatedBoardAfterOpen);
+      if (allNonmineCellsUncovered(updatedBoardAfterOpen)) {
+        setGameOver(true);
+        setGameWon(true);
+      }
+    }
   };
 
-// Función para destapar una celda y actualizar el estado
-const openCell = (row, col) => {
-  const updatedBoard = [...board];
-  updatedBoard[row][col].EstaDestapado = true;
-  if (updatedBoard[row][col].TieneMina) {
-    const updatedBoardWithMines = updatedBoard.map(row =>
-      row.map(cell => ({
-        ...cell,
-        EstaDestapado: true
-      }))
-    );
-    setBoard(updatedBoardWithMines);
-  } else {
-      openEmptyCells(row, col); // Llamar a la función openEmptyCells aquí
-      setBoard(updatedBoard); // Actualizar el estado del tablero con el tablero actualizado
-  }
-};
+  // Función para verificar si todas las celdas sin minas están destapadas
+  const allNonmineCellsUncovered = (board) => {
+    for (let row = 0; row < board.length; row++) {
+      for (let col = 0; col < board[row].length; col++) {
+        if (!board[row][col].TieneMina && !board[row][col].EstaDestapado) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
 
 
   // Función para renderizar el tablero
@@ -127,13 +157,16 @@ const openCell = (row, col) => {
     ));
   };
 
-  // Función para reiniciar el juego
-  function resetGame() {
-    setBoard(createNewBoard());
-  }
+  useEffect(() => {
+    if (gameOver && gameWon) {
+      // Aquí puedes realizar cualquier acción adicional que desees cuando se gana el juego
+    }
+  }, [gameOver, gameWon]);
 
   return (
     <>
+     {gameOver && <WinAlert resetGame={resetGame} winner={gameWon} />}
+
       <button onClick={resetGame}>Reset game</button>
       <div className="board">{renderBoard()}</div>
       <footer>
