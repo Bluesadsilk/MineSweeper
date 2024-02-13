@@ -7,7 +7,7 @@ const Cell = ({ TieneMina, EstaDestapado, MinasAlrededor, x, y, updateBoard }) =
   }
 
   return (
-    <button onClick={handleOnclick} className='cell'>
+    <button onClick={handleOnclick} className='cell' id={"arround" + MinasAlrededor}>
       {EstaDestapado ? (TieneMina ? '💣' : MinasAlrededor) : null}
     </button>
   );

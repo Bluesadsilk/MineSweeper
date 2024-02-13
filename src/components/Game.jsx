@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Board from './Board';
 
 const Game = () => {
-  const [width, setWidth] = useState(10);
-  const [height, setHeight] = useState(10);
+  const [width, setWidth] = useState(5);
+  const [height, setHeight] = useState(5);
   const [mines, setMines] = useState(10);
   const [gameStarted, setGameStarted] = useState(false);
   
