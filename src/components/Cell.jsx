@@ -1,4 +1,3 @@
-import React from 'react';
 
 const Cell = ({ TieneMina, EstaDestapado, MinasAlrededor, x, y, updateBoard }) => {
   
